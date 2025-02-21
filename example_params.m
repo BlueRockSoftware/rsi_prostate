@@ -24,7 +24,8 @@ params.CorrectNoise = 1;
 % If on the CMIG network, set the container to 'Singularity' (default)
 % If you have and want to use the Docker container, set the container to 'Docker' 
 params.ProstateSeg = 1;
-params.ProstateSegContainer = 'Singularity';
+%params.ProstateSegContainer = 'Singularity';
+params.ProstateSegContainer = 'Docker';
 
 % DICOM outputs
 params.WriteDICOMS = 1;

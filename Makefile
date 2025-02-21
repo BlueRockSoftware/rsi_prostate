@@ -35,3 +35,4 @@ install: autoseg/call_docker.sh ../cmig_utils/dicom/dicts/gems-dicom-dict.txt
 	mkdir -p data/example_images
 	cp autoseg/call_docker.sh data/
 	cp ../cmig_utils/dicom/dicts/gems-dicom-dict.txt data/
+	cp protocols/artpro_protocol_reference.mat data/
