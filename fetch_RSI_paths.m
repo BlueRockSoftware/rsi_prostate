@@ -73,7 +73,16 @@ for i = 1:length(acqs)
     acq_path = fullfile(exam_dir, acqs(i).name);
 
     ims = dir(acq_path);
-    im = ims(3).name;
+    % Filter out . and .. from directory listing
+    ims = ims(~ismember({ims.name}, {'.', '..'}));
+    
+    % Check if directory has any files
+    if isempty(ims)
+        fprintf('Warning: No files found in directory: %s\n', acq_path);
+        continue
+    end
+    
+    im = ims(1).name;
     info = dicominfo(fullfile(acq_path, im));
     info = fix_impax_dcm_tags(info);
 
