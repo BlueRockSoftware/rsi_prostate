@@ -28,9 +28,9 @@ elif [ -n "$GHCR_LOGIN" ]; then
 fi
 
 # Mirror contents from path_seg_dir (main container) to shared-volume (sidecar container)
-# Use --no-group --no-owner to avoid permission errors on shared volumes
+# Skip group/owner/perms/dir-times to avoid permission errors on K8s shared volumes
 echo "Syncing input files to shared volume..."
-rsync -avq --delete --no-group --no-owner "$path_seg_dir/" /shared-volume/
+rsync -avq --delete --no-group --no-owner --no-perms --omit-dir-times "$path_seg_dir/" /shared-volume/
 
 # Run the prostate segmentation container
 echo "Running prostate segmentation container..."
@@ -39,6 +39,6 @@ docker run -i --rm -u 0:0 -v /shared-volume:/input -v /shared-volume:/output ghc
 
 # After the job finishes, sync back the results from shared-volume to path_seg_dir
 echo "Syncing results back from shared volume..."
-rsync -avq --delete --no-group --no-owner /shared-volume/ "$path_seg_dir/"
+rsync -avq --delete --no-group --no-owner --no-perms --omit-dir-times /shared-volume/ "$path_seg_dir/"
 
 echo "Prostate segmentation completed successfully"
